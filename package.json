@@ -17,12 +17,12 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
-  "type": "module",
   "engines": {
     "node": " >= 16.0.0"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.44",
+    "colors.ts": "^1.0.20",
     "discord.js": "^14.13.0",
     "fs": "^0.0.1-security",
     "mongoose": "^7.5.2",
