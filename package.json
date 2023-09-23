@@ -1,0 +1,24 @@
+{
+  "name": "chichi-bot-v14-ts",
+  "version": "1.0.0",
+  "description": "a discord bot named chichi written in typeScript and discord.js v14",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon --config nodemon.json src/index.ts",
+    "build": "tsc"
+  },
+  "author": "fumino_the_axolotl",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.6.3",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "type": "module",
+  "engines": {
+    "node": " >= 16.0.0"
+  }
+}
