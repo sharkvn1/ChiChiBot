@@ -1,6 +1,13 @@
+console.clear();
+
 import { Client, GatewayIntentBits, Collection } from "discord.js";
-const config = require("./Config/config.json");
-import Colors from 'colors.ts';
+import { SlashCommand } from './types';
+import config from "./Config/config.json";
+const colors = require('@colors/colors');
+
+colors.setTheme({
+    log: ['green', 'bold']
+});
 const chichi = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -18,20 +25,37 @@ const chichi = new Client({
         GatewayIntentBits.MessageContent,
     ],
 });
-Colors.theme({ logMess: ["blue", "bold"] });
+
 try {
-    const stringlength2 = 69;
+    const stringLength2 = 69;
     console.log("\n");
-    console.log("     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-    console.log(`     ┃ ` + " ".repeat(-1 + stringlength2 - ` ┃ `.length) + "┃");
-    console.log(`     ┃ ` + `Now Start Running Bot` + " ".repeat(-1 + stringlength2 - ` ┃ `.length - `Now Start Running Bot`.length) + "┃");
-    console.log(`     ┃ ` + " ".repeat(-1 + stringlength2 - ` ┃ `.length) + "┃");
-    console.log(`     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`);
+    console.log(colors.log("     ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓"));
+    console.log(colors.log(`     ┃ ` + " ".repeat(-1 + stringLength2 - ` ┃ `.length) + "┃"));
+    console.log(colors.log(`     ┃ ` + `Now Start Running Bot` + " ".repeat(-1 + stringLength2 - ` ┃ `.length - `Now Start Running Bot`.length) + "┃"));
+    console.log(colors.log(`     ┃ ` + " ".repeat(-1 + stringLength2 - ` ┃ `.length) + "┃"));
+    console.log(colors.log(`     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛`));
     console.log(`\n`);
 } catch (err) {
     console.log(err);
 }
 
-chichi.login(config.token).then(() => {
-    console.log('test successful');
-})
+chichi.slashCommands = new Collection<string, SlashCommand>();
+
+async function requirehandlers() {
+    for await (const handler of [
+        "antiCrash",
+        "events",
+        "commands",
+        "deployCmd",
+    ]) {
+        try {
+            await require(`../src/handlers/${handler}`)(chichi);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+requirehandlers();
+
+chichi.login(config.token)
