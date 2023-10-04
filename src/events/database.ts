@@ -1,5 +1,5 @@
 import { Events, Client } from 'discord.js';
-import guildConfig from '../database/guildConfig';
+const guildConfig = require('../database/guildConfig');
 module.exports = {
     name: Events.ClientReady,
     once: true,
